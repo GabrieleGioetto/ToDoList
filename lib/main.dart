@@ -94,7 +94,6 @@ class _MyHomePageState extends State<MyHomePage> {
                             _textList[index],
                             style: new TextStyle(fontSize: 18.0,fontFamily: 'Helvetica')
                           ),
-                          new Divider(height: 12.0,)
                         ],
                       ),
                       new Divider(height: 10.0)
