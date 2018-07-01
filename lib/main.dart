@@ -33,7 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext contextS) {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(widget.title),
@@ -75,30 +75,44 @@ class _MyHomePageState extends State<MyHomePage> {
               child: new ListView.builder(
                 itemCount: _textList.length,
                 itemBuilder: (BuildContext cont,int index){
-                  return new Column(
-                    children: <Widget>[
-                      new Row(
-                        
-                        children: <Widget>[
-                          new Checkbox(
-                              value: boolValues[index],
-                              tristate: false,
-                              activeColor: Colors.green,
-                              onChanged: (bool newValue) {
-                                setState(() {
-                                  boolValues[index] = newValue;
-                                });
-                              },
-                          ),
-                          new Text(
-                            _textList[index],
-                            style: new TextStyle(fontSize: 18.0,fontFamily: 'Helvetica')
-                          ),
-                        ],
-                      ),
-                      new Divider(height: 10.0)
-                    ],
+                  final item = _textList[index];
+
+                  return new Dismissible(
+                    key: Key(item), 
+                    child: new Column(
+                      children: <Widget>[
+                        new Row(
+                          children: <Widget>[
+                            new Checkbox(
+                                value: boolValues[index],
+                                tristate: false,
+                                activeColor: Colors.green,
+                                onChanged: (bool newValue) {
+                                  setState(() {
+                                    boolValues[index] = newValue;
+                                    Scaffold.of(contextS).showSnackBar(SnackBar(content: Text('GG')));
+                                  });
+                                },
+                            ),
+                            new Text(
+                              _textList[index],
+                              style: new TextStyle(fontSize: 18.0,fontFamily: 'Helvetica')
+                            ),
+                          ],
+                        ),
+                        new Divider(height: 10.0)
+                      ],
+                    ),
+                     onDismissed: (direction) {
+                      _textList.removeAt(index);
+
+                      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Deleted note')));
+                    },
+                    // Show a red background as the item is swiped away
+                    background: Container(color: Colors.red),
+
                   );
+                   
                 },     
              ),
     ),
